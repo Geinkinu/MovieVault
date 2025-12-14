@@ -10,10 +10,36 @@ use Illuminate\Support\Str;
 
 class MovieController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $movies = Movie::with('category')->orderBy('title')->get();
-        return view('movies.index', compact('movies'));
+        $categories = Category::orderBy('name')->get();
+
+        $query = Movie::query()->with('category');
+
+        // Filter by category (slug)
+        if ($request->filled('category')) {
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('slug', $request->get('category'));
+            });
+        }
+
+        // Sorting
+        $sort = $request->get('sort', 'title');
+        $direction = $request->get('direction', 'asc');
+
+        $allowedSorts = ['title', 'release_year'];
+        if (!in_array($sort, $allowedSorts, true)) {
+            $sort = 'title';
+        }
+
+        $allowedDirections = ['asc', 'desc'];
+        if (!in_array($direction, $allowedDirections, true)) {
+            $direction = 'asc';
+        }
+
+        $movies = $query->orderBy($sort, $direction)->get();
+
+        return view('movies.index', compact('movies', 'categories', 'sort', 'direction'));
     }
 
     public function create()

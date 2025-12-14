@@ -9,40 +9,46 @@
         <a href="{{ route('movies.create') }}" class="btn btn-primary">Add Movie</a>
     </div>
 
-    @if($movies->count() === 0)
-        <div class="alert alert-info mb-0">No movies yet.</div>
-    @else
-        <div class="table-responsive">
-            <table class="table table-striped align-middle">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Year</th>
-                        <th>Category</th>
-                        <th class="text-end">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($movies as $movie)
-                        <tr>
-                            <td>{{ $movie->title }}</td>
-                            <td>{{ $movie->release_year ?? '-' }}</td>
-                            <td>{{ $movie->category?->name ?? '-' }}</td>
-                            <td class="text-end">
-                                <a class="btn btn-sm btn-outline-secondary"
-                                   href="{{ route('movies.show', $movie->slug) }}">
-                                    View
-                                </a>
-                                <a class="btn btn-sm btn-outline-primary"
-                                   href="{{ route('movies.edit', $movie->slug) }}">
-                                    Edit
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+    <form method="GET" action="{{ route('movies.index') }}" class="card mb-3">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label">Category</label>
+                    <select name="category" class="form-select">
+                        <option value="">All categories</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->slug }}"
+                                @selected(request('category') === $category->slug)>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Sort by</label>
+                    <select name="sort" class="form-select">
+                        <option value="title" @selected(request('sort', $sort ?? 'title') === 'title')>Title</option>
+                        <option value="release_year" @selected(request('sort', $sort ?? 'title') === 'release_year')>Release Year</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Direction</label>
+                    <select name="direction" class="form-select">
+                        <option value="asc" @selected(request('direction', $direction ?? 'asc') === 'asc')>Ascending</option>
+                        <option value="desc" @selected(request('direction', $direction ?? 'asc') === 'desc')>Descending</option>
+                    </select>
+                </div>
+
+                <div class="col-12 d-flex gap-2">
+                    <button type="submit" class="btn btn-outline-primary">Apply</button>
+                    <a href="{{ route('movies.index') }}" class="btn btn-outline-secondary">Reset</a>
+                </div>
+            </div>
         </div>
-    @endif
+    </form>
+
+    @include('movies.partials.table', ['movies' => $movies])
 </div>
 @endsection
