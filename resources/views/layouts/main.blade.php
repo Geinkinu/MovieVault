@@ -19,8 +19,8 @@
   <!-- navbar -->
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
-      <a class="navbar-brand text-uppercase" href="index.html">
-        <strong>Contact</strong> App
+      <a class="navbar-brand text-uppercase" href="{{ route('home') }}">
+        <strong>Movie</strong> Vault
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-toggler"
         aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,6 +30,8 @@
       <!-- /.navbar-header -->
       <div class="collapse navbar-collapse" id="navbar-toggler">
         <ul class="navbar-nav">
+          <a class="nav-link" href="{{ route('home') }}">Home</a>
+          <a class="nav-link" href="{{ route('about') }}">About</a>
           <a class="nav-link" href="{{ route('movies.index') }}">Movies</a>
           <a class="nav-link" href="{{ route('categories.index') }}">Categories</a>
         </ul>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ReviewController;
-
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +18,8 @@ use App\Http\Controllers\ReviewController;
 */
 
 // Home
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/about', [PageController::class, 'about'])->name('about');
 
 // Categories
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
