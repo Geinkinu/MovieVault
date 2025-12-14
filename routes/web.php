@@ -14,14 +14,82 @@ use App\Http\Controllers\ContactController;
 |
 */
 
+// Home
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
-Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
-Route::get('/contacts/create', [ContactController::class, 'create'])->name('contacts.create');
-Route::get('/contacts/{id}', [ContactController::class, 'show'])->name('contacts.show');
-Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
-Route::get('/contacts/{id}/edit', [ContactController::class, 'edit'])->name('contacts.edit');
-Route::put('/contacts/{id}', [ContactController::class, 'update'])->name('contacts.update');
-Route::delete('/contacts/{id}', [ContactController::class, 'destroy'])->name('contacts.destroy');
+// Categories
+Route::get('/categories', function () {
+    return 'Categories index (placeholder)';
+})->name('categories.index');
+
+Route::get('/categories/create', function () {
+    return 'Categories create (placeholder)';
+})->name('categories.create');
+
+Route::post('/categories', function () {
+    return 'Categories store (placeholder)';
+})->name('categories.store');
+
+Route::get('/categories/{category:slug}', function () {
+    return 'Categories show (placeholder)';
+})->name('categories.show');
+
+Route::get('/categories/{category:slug}/edit', function () {
+    return 'Categories edit (placeholder)';
+})->name('categories.edit');
+
+Route::put('/categories/{category:slug}', function () {
+    return 'Categories update (placeholder)';
+})->name('categories.update');
+
+Route::delete('/categories/{category:slug}', function () {
+    return 'Categories destroy (placeholder)';
+})->name('categories.destroy');
+
+// Movies
+Route::get('/movies', function () {
+    return 'Movies index (placeholder)';
+})->name('movies.index');
+
+Route::get('/movies/create', function () {
+    return 'Movies create (placeholder)';
+})->name('movies.create');
+
+Route::post('/movies', function () {
+    return 'Movies store (placeholder)';
+})->name('movies.store');
+
+Route::get('/movies/{movie:slug}', function () {
+    return 'Movies show (placeholder)';
+})->name('movies.show');
+
+Route::get('/movies/{movie:slug}/edit', function () {
+    return 'Movies edit (placeholder)';
+})->name('movies.edit');
+
+Route::put('/movies/{movie:slug}', function () {
+    return 'Movies update (placeholder)';
+})->name('movies.update');
+
+Route::delete('/movies/{movie:slug}', function () {
+    return 'Movies destroy (placeholder)';
+})->name('movies.destroy');
+
+// Reviews
+Route::post('/movies/{movie:slug}/reviews', function () {
+    return 'Reviews store (placeholder)';
+})->name('reviews.store');
+
+Route::get('/movies/{movie:slug}/reviews/{review}/edit', function () {
+    return 'Reviews edit (placeholder)';
+})->name('reviews.edit');
+
+Route::put('/movies/{movie:slug}/reviews/{review}', function () {
+    return 'Reviews update (placeholder)';
+})->name('reviews.update');
+
+Route::delete('/movies/{movie:slug}/reviews/{review}', function () {
+    return 'Reviews destroy (placeholder)';
+})->name('reviews.destroy');
