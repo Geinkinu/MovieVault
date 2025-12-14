@@ -21,6 +21,11 @@ return [
         'scheme' => 'https',
     ],
 
+    'omdb' => [
+        'key' => env('OMDB_API_KEY'),
+        'url' => env('OMDB_API_URL', 'https://www.omdbapi.com/'),
+    ],
+
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],

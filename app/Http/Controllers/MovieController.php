@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Movie;
 use App\Models\Category;
 use Illuminate\Support\Str;
-
+use App\Rules\OmdbMovieExists;
 
 class MovieController extends Controller
 {
@@ -52,7 +52,7 @@ class MovieController extends Controller
     {
         $validated = $request->validate([
             'category_id' => ['required', 'exists:categories,id'],
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255', new OmdbMovieExists($request->input('imdb_id'), $request->input('release_year'))],
             'release_year' => ['nullable', 'integer', 'between:1888,' . (int) date('Y')],
             'imdb_id' => ['nullable', 'string', 'max:20'],
             'poster' => ['nullable', 'url'],
@@ -97,7 +97,7 @@ class MovieController extends Controller
     {
         $validated = $request->validate([
             'category_id' => ['required', 'exists:categories,id'],
-            'title' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255', new OmdbMovieExists($request->input('imdb_id'), $request->input('release_year'))],
             'release_year' => ['nullable', 'integer', 'between:1888,' . (int) date('Y')],
             'imdb_id' => ['nullable', 'string', 'max:20'],
             'poster' => ['nullable', 'url'],
