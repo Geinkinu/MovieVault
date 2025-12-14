@@ -7,6 +7,7 @@ use App\Models\Movie;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use App\Rules\OmdbMovieExists;
+use App\Services\OmdbService;
 
 class MovieController extends Controller
 {
@@ -51,12 +52,12 @@ class MovieController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'category_id' => ['required', 'exists:categories,id'],
-            'title' => ['required', 'string', 'max:255', new OmdbMovieExists($request->input('imdb_id'), $request->input('release_year'))],
-            'release_year' => ['nullable', 'integer', 'between:1888,' . (int) date('Y')],
-            'imdb_id' => ['nullable', 'string', 'max:20'],
-            'poster' => ['nullable', 'url'],
-            'description' => ['nullable', 'string'],
+            'category_id'   => ['required', 'exists:categories,id'],
+            'title'         => ['required', 'string', 'max:255', new OmdbMovieExists($request->input('imdb_id'))],
+            'date_watched'  => ['nullable', 'date'],
+            'imdb_id'       => ['nullable', 'string', 'max:20'],
+            'poster'        => ['nullable', 'url'],
+            'description'   => ['nullable', 'string'],
         ]);
 
         $slug = Str::slug($validated['title']);
@@ -68,14 +69,29 @@ class MovieController extends Controller
             $i++;
         }
 
+        // Fetch OMDb info and auto-populate release_year (and optionally other fields)
+        $omdbService = app(OmdbService::class);
+
+        $omdbData = $omdbService->fetchMovie(
+            $validated['imdb_id'] ?? null,
+            $validated['title']
+        );
+
+        $releaseYear = $omdbService->extractReleaseYear($omdbData['Year'] ?? null);
+
         $movie = Movie::create([
-            'category_id' => $validated['category_id'],
-            'title' => $validated['title'],
-            'slug' => $slug,
-            'release_year' => $validated['release_year'] ?? null,
-            'imdb_id' => $validated['imdb_id'] ?? null,
-            'poster' => $validated['poster'] ?? null,
-            'description' => $validated['description'] ?? null,
+            'category_id'   => $validated['category_id'],
+            'title'         => $validated['title'],
+            'slug'          => $slug,
+            'date_watched'  => $validated['date_watched'] ?? null,
+
+            // From OMDb
+            'release_year'  => $releaseYear,
+
+            // Only auto-fill if user left blank
+            'imdb_id'       => $validated['imdb_id'] ?? ($omdbData['imdbID'] ?? null),
+            'poster'        => $validated['poster'] ?? ((($omdbData['Poster'] ?? null) && ($omdbData['Poster'] ?? null) !== 'N/A') ? ($omdbData['Poster'] ?? null) : null),
+            'description'   => $validated['description'] ?? ((($omdbData['Plot'] ?? null) && ($omdbData['Plot'] ?? null) !== 'N/A') ? ($omdbData['Plot'] ?? null) : null),
         ]);
 
         return redirect()->route('movies.show', $movie->slug);
@@ -96,12 +112,12 @@ class MovieController extends Controller
     public function update(Request $request, Movie $movie)
     {
         $validated = $request->validate([
-            'category_id' => ['required', 'exists:categories,id'],
-            'title' => ['required', 'string', 'max:255', new OmdbMovieExists($request->input('imdb_id'), $request->input('release_year'))],
-            'release_year' => ['nullable', 'integer', 'between:1888,' . (int) date('Y')],
-            'imdb_id' => ['nullable', 'string', 'max:20'],
-            'poster' => ['nullable', 'url'],
-            'description' => ['nullable', 'string'],
+            'category_id'   => ['required', 'exists:categories,id'],
+            'title'         => ['required', 'string', 'max:255', new OmdbMovieExists($request->input('imdb_id'))],
+            'date_watched'  => ['nullable', 'date'],
+            'imdb_id'       => ['nullable', 'string', 'max:20'],
+            'poster'        => ['nullable', 'url'],
+            'description'   => ['nullable', 'string'],
         ]);
 
         $newSlug = Str::slug($validated['title']);
@@ -113,14 +129,29 @@ class MovieController extends Controller
             $i++;
         }
 
+        // Fetch OMDb info and auto-populate release_year (and optionally other fields)
+        $omdbService = app(OmdbService::class);
+
+        $omdbData = $omdbService->fetchMovie(
+            $validated['imdb_id'] ?? null,
+            $validated['title']
+        );
+
+        $releaseYear = $omdbService->extractReleaseYear($omdbData['Year'] ?? null);
+
         $movie->update([
-            'category_id' => $validated['category_id'],
-            'title' => $validated['title'],
-            'slug' => $newSlug,
-            'release_year' => $validated['release_year'] ?? null,
-            'imdb_id' => $validated['imdb_id'] ?? null,
-            'poster' => $validated['poster'] ?? null,
-            'description' => $validated['description'] ?? null,
+            'category_id'   => $validated['category_id'],
+            'title'         => $validated['title'],
+            'slug'          => $newSlug,
+            'date_watched'  => $validated['date_watched'] ?? null,
+
+            // Always refresh from OMDb (so release year is validated by API)
+            'release_year'  => $releaseYear,
+
+            // Only auto-fill if user left blank
+            'imdb_id'       => $validated['imdb_id'] ?? ($omdbData['imdbID'] ?? null),
+            'poster'        => $validated['poster'] ?? ((($omdbData['Poster'] ?? null) && ($omdbData['Poster'] ?? null) !== 'N/A') ? ($omdbData['Poster'] ?? null) : null),
+            'description'   => $validated['description'] ?? ((($omdbData['Plot'] ?? null) && ($omdbData['Plot'] ?? null) !== 'N/A') ? ($omdbData['Plot'] ?? null) : null),
         ]);
 
         return redirect()->route('movies.show', $movie->slug);

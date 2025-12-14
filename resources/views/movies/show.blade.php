@@ -39,6 +39,12 @@
             </div>
         </div>
 
+        <br>
+
+        @if($movie->date_watched)
+            • Watched: {{ \Carbon\Carbon::parse($movie->date_watched)->format('d-m-Y') }}
+        @endif
+
         <div class="mt-4">
             <h4 class="mb-3">Reviews</h4>
 

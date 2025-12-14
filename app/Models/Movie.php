@@ -14,6 +14,7 @@ class Movie extends Model
         'title',
         'slug',
         'release_year',
+        'date_watched',
         'imdb_id',
         'poster',
         'description',
