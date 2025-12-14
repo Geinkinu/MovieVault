@@ -9,7 +9,8 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return 'Categories index (controller placeholder)';
+        $categories = Category::orderBy('name')->get();
+        return view('categories.index', compact('categories'));
     }
 
     public function create()
@@ -24,7 +25,8 @@ class CategoryController extends Controller
 
     public function show(Category $category)
     {
-        return 'Categories show (controller placeholder) ' . $category->slug;
+        $category->load('movies');
+        return view('categories.show', compact('category'));
     }
 
     public function edit(Category $category)

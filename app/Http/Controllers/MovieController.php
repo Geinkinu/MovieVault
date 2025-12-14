@@ -9,7 +9,8 @@ class MovieController extends Controller
 {
     public function index()
     {
-        return 'Movies index (controller placeholder)';
+        $movies = Movie::with('category')->orderBy('title')->get();
+        return view('movies.index', compact('movies'));
     }
 
     public function create()
@@ -24,8 +25,10 @@ class MovieController extends Controller
 
     public function show(Movie $movie)
     {
-        return 'Movies show (controller placeholder) ' . $movie->slug;
+        $movie->load(['category', 'reviews']);
+        return view('movies.show', compact('movie'));
     }
+
 
     public function edit(Movie $movie)
     {
