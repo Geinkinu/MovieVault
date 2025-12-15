@@ -1,66 +1,123 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# MovieVault
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+MovieVault is a single-user **Movie Catalogue & Review Manager** built with **Laravel 10** using the MVC architectural pattern.
 
-## About Laravel
+The application allows movies to be organised into categories, reviewed, filtered, and validated using an external API.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Project Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Static Pages
+- Home page
+- About page
 
-## Learning Laravel
+### Dynamic Pages
+- Categories listing and details
+- Movies listing and details
+- Reviews per movie
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Relationships (1-to-Many)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+The project implements the following required relationships:
 
-## Laravel Sponsors
+- **Category → Movies**
+- **Movie → Reviews**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Each category can contain multiple movies, and each movie can have multiple reviews.
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## CRUD Functionality
 
-## Contributing
+Full Create, Read, Update, and Delete (CRUD) functionality is implemented for:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Categories
+- Movies
+- Reviews
 
-## Code of Conduct
+All operations are handled through controllers, views, and routes following MVC principles.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## SEO-Friendly URLs
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+SEO-friendly URLs are implemented using **slugs**:
 
-## License
+- Categories: `/categories/{slug}`
+- Movies: `/movies/{slug}`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Slugs are generated automatically and enforced to be unique.
+
+---
+
+## Filtering and Sorting
+
+Movies can be:
+
+- Filtered by category
+- Sorted by title or release year
+
+Filtering and sorting logic is handled in controllers and rendered using Blade views and partials.
+
+---
+
+## External API Validation (OMDb)
+
+The project integrates the **OMDb API** as part of form validation when creating or updating a movie.
+
+When a movie is added:
+
+- The OMDb API verifies that the movie exists
+- The movie’s **release year** is automatically populated
+- Invalid movie titles or IMDb IDs are rejected
+
+This satisfies the assignment requirement for using an external API.
+
+---
+
+## Date Watched
+
+Instead of manually entering a release year:
+
+- Users enter an optional **date watched**
+- The release year is retrieved automatically from OMDb
+
+---
+
+## Technology Stack
+
+- Laravel 10
+- PHP 8+
+- MySQL
+- Blade Templates
+- Bootstrap (CRUD-based UI)
+- OMDb API
+
+---
+
+## How to Run the Project
+
+1. Clone the repository
+
+2. Install dependencies:
+   ```bash
+   composer install
+   npm install
+   npm run build
+3. Copy the environment file:
+   ```bash
+   cp .env.example .env
+4. Configure database credentials in the .env file
+5. Generate application key:
+   ```bash
+   php artisan key:generate
+6. Run Migrations:
+   ```bash
+   php artisan migrate
+7. Start the Server
+   ```bash
+   php artisan serve
+---
