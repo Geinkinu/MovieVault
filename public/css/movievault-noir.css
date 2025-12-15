@@ -1,0 +1,253 @@
+/* MovieVault Noir - Original Bootstrap skin*/
+:root{
+  --mv-bg: #0b0f17;
+  --mv-surface: #101827;
+  --mv-surface-2: #0f172a;
+  --mv-border: rgba(255,255,255,.08);
+  --mv-text: rgba(255,255,255,.92);
+  --mv-muted: rgba(255,255,255,.68);
+  --mv-accent: #7c3aed;
+  --mv-accent-2: #22c55e;
+  --mv-warning: #f59e0b;
+  --mv-danger: #ef4444;
+  --mv-shadow: 0 10px 35px rgba(0,0,0,.35);
+}
+
+html, body {
+  background: radial-gradient(1200px 700px at 20% 0%, rgba(124,58,237,.18), transparent 55%),
+              radial-gradient(900px 600px at 90% 10%, rgba(34,197,94,.10), transparent 50%),
+              var(--mv-bg);
+  color: var(--mv-text);
+}
+
+a { text-decoration: none; }
+a:hover { text-decoration: none; opacity: .95; }
+
+.mv-navbar{
+  backdrop-filter: blur(10px);
+  background: rgba(16,24,39,.72) !important;
+  border-bottom: 1px solid var(--mv-border);
+}
+.mv-brand{
+  letter-spacing: .5px;
+  font-weight: 700;
+}
+.mv-pill{
+  border: 1px solid var(--mv-border);
+  background: rgba(255,255,255,.04);
+  color: var(--mv-muted);
+  border-radius: 999px;
+  padding: .25rem .6rem;
+  font-size: .85rem;
+}
+
+.mv-shell{
+  padding: 1.25rem 0 2.5rem;
+}
+
+.mv-card{
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border: 1px solid var(--mv-border);
+  border-radius: 18px;
+  box-shadow: var(--mv-shadow);
+}
+
+.mv-card .card-header{
+  background: transparent;
+  border-bottom: 1px solid var(--mv-border);
+}
+
+.mv-hero{
+  border-radius: 22px;
+  border: 1px solid var(--mv-border);
+  background:
+    radial-gradient(900px 380px at 10% 15%, rgba(124,58,237,.22), transparent 55%),
+    radial-gradient(900px 380px at 90% 20%, rgba(34,197,94,.15), transparent 55%),
+    rgba(255,255,255,.03);
+  box-shadow: var(--mv-shadow);
+  overflow: hidden;
+}
+
+.mv-hero h1{
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+
+.mv-subtle{
+  color: var(--mv-muted);
+}
+
+.mv-btn-primary{
+  background: var(--mv-accent);
+  border-color: var(--mv-accent);
+}
+.mv-btn-primary:hover{
+  filter: brightness(1.05);
+}
+.mv-btn-ghost{
+  border: 1px solid var(--mv-border);
+  background: rgba(255,255,255,.03);
+  color: var(--mv-text);
+}
+.mv-btn-ghost:hover{
+  background: rgba(255,255,255,.06);
+}
+
+.mv-table{
+  border-color: var(--mv-border) !important;
+}
+.table.mv-table > :not(caption) > * > *{
+  background: transparent;
+  border-bottom-color: var(--mv-border);
+  color: var(--mv-text);
+}
+.table.mv-table thead th{
+  color: var(--mv-muted);
+  font-weight: 600;
+  border-bottom-color: var(--mv-border);
+}
+.table.mv-table tbody tr:hover{
+  background: rgba(255,255,255,.03);
+}
+
+.form-control, .form-select, textarea{
+  background: rgba(255,255,255,.03) !important;
+  border: 1px solid var(--mv-border) !important;
+  color: var(--mv-text) !important;
+}
+.form-control:focus, .form-select:focus, textarea:focus{
+  border-color: rgba(124,58,237,.7) !important;
+  box-shadow: 0 0 0 .25rem rgba(124,58,237,.18) !important;
+}
+.form-label{
+  color: var(--mv-muted);
+  font-weight: 600;
+}
+
+.alert{
+  border: 1px solid var(--mv-border);
+  background: rgba(255,255,255,.03);
+  color: var(--mv-text);
+}
+
+.badge.mv-badge{
+  border: 1px solid var(--mv-border);
+  background: rgba(255,255,255,.04);
+  color: var(--mv-muted);
+  font-weight: 600;
+}
+
+.mv-footer{
+  border-top: 1px solid var(--mv-border);
+  color: var(--mv-muted);
+  padding: 1.25rem 0;
+  background: rgba(16,24,39,.55);
+}
+
+/* Cards */
+.card, .modal-content, .dropdown-menu {
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)) !important;
+  border: 1px solid var(--mv-border) !important;
+  color: var(--mv-text) !important;
+  border-radius: 18px;
+  box-shadow: var(--mv-shadow);
+}
+.card-header, .modal-header {
+  background: transparent !important;
+  border-bottom: 1px solid var(--mv-border) !important;
+}
+.card-footer, .modal-footer {
+  background: transparent !important;
+  border-top: 1px solid var(--mv-border) !important;
+}
+
+/* Tables */
+.table {
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: rgba(255,255,255,.03);
+  --bs-table-hover-bg: rgba(255,255,255,.05);
+  color: var(--mv-text) !important;
+}
+.table thead th {
+  color: var(--mv-muted) !important;
+  border-bottom-color: var(--mv-border) !important;
+}
+.table td, .table th {
+  border-top-color: var(--mv-border) !important;
+  border-bottom-color: var(--mv-border) !important;
+}
+
+/* Buttons */
+.btn-outline-primary,
+.btn-outline-secondary,
+.btn-outline-danger {
+  border-color: var(--mv-border) !important;
+  color: var(--mv-text) !important;
+}
+.btn-outline-primary:hover,
+.btn-outline-secondary:hover,
+.btn-outline-danger:hover {
+  background: rgba(255,255,255,.08) !important;
+}
+
+/* Links in cards/tables */
+.card a, .table a {
+  color: var(--mv-text);
+}
+.card a:hover, .table a:hover {
+  opacity: .9;
+}
+
+/* --- Table Text (to make them not black) --- */
+.table,
+.table * {
+  color: var(--mv-text) !important;
+}
+
+.table a,
+.table a:visited {
+  color: var(--mv-text) !important;
+}
+
+.table tbody tr td,
+.table tbody tr th,
+.table thead th {
+  color: var(--mv-text) !important;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  color: var(--mv-text) !important;
+}
+
+.table-hover > tbody > tr:hover > * {
+  color: var(--mv-text) !important;
+}
+
+.table .text-muted,
+.table small {
+  color: var(--mv-muted) !important;
+}
+
+/* Category */
+.list-group,
+.list-group-item {
+  background: transparent !important;
+  border-color: var(--mv-border) !important;
+  color: var(--mv-text) !important;
+}
+
+.list-group-item {
+  background: rgba(255,255,255,.03) !important;
+}
+
+.list-group-item + .list-group-item {
+  border-top: 1px solid var(--mv-border) !important;
+}
+
+.list-group-item:hover {
+  background: rgba(255,255,255,.05) !important;
+}
+
+.list-group-item a {
+  color: var(--mv-text) !important;
+}
