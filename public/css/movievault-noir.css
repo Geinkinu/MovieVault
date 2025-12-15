@@ -190,7 +190,6 @@ a:hover { text-decoration: none; opacity: .95; }
   background: rgba(255,255,255,.08) !important;
 }
 
-/* Links in cards/tables */
 .card a, .table a {
   color: var(--mv-text);
 }
@@ -198,7 +197,6 @@ a:hover { text-decoration: none; opacity: .95; }
   opacity: .9;
 }
 
-/* --- Table Text (to make them not black) --- */
 .table,
 .table * {
   color: var(--mv-text) !important;
@@ -250,4 +248,13 @@ a:hover { text-decoration: none; opacity: .95; }
 
 .list-group-item a {
   color: var(--mv-text) !important;
+}
+
+select option {
+  color: #000 !important;
+  background-color: #fff !important;
+}
+
+select:focus option {
+  color: #000 !important;
 }

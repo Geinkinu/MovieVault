@@ -7,8 +7,12 @@
         <div class="d-flex justify-content-between align-items-start mb-3">
             <div>
                 <h2 class="mb-1">{{ $movie->title }}</h2>
-                <div class="text-muted">
-                    {{ $movie->release_year ?? 'Year unknown' }}
+                <div class="text-light opacity-75">
+                    Released: {{ $movie->release_year ?? 'Unknown' }}
+                    @if($movie->date_watched)
+                        • Watched: {{ $movie->date_watched }}
+                    @endif
+
                     @if($movie->category)
                         • {{ $movie->category->name }}
                     @endif
