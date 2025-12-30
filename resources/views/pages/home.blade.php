@@ -13,7 +13,7 @@
                     <span class="mv-pill">OMDb Validation</span>
                 </div>
 
-                <h1 class="display-6 mb-2">MovieVault Noir</h1>
+                <h1 class="display-6 mb-2">MovieVault</h1>
                 <p class="mv-subtle mb-4">
                     Curate your library, track what you watched, and capture reviews. Movies are validated via OMDb and stored with SEO-friendly slugs.
                 </p>
