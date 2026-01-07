@@ -7,7 +7,7 @@
         <div class="d-flex justify-content-between align-items-start mb-3">
             <div>
                 <h2 class="mb-1">{{ $category->name }}</h2>
-                <div class="text-muted">{{ $category->movies->count() }} movies</div>
+                <div class="text-white">{{ $category->movies->count() }} movies</div>
             </div>
             <div class="d-flex gap-2">
                 <a class="btn btn-outline-primary" href="{{ route('categories.edit', $category->slug) }}">Edit</a>

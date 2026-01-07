@@ -16,7 +16,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('categories.store') }}">
+    <form method="POST" action="{{ route('categories.store') }}" novalidate>
         @csrf
 
         <div class="mb-3">
@@ -24,10 +24,13 @@
             <input
                 type="text"
                 name="name"
-                class="form-control"
+                class="form-control @error('name') is-invalid @enderror"
                 value="{{ old('name') }}"
-                required
+                placeholder="e.g. Action"
             >
+            @error('name')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="d-flex gap-2">

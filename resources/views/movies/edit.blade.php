@@ -3,66 +3,107 @@
 @section('title', 'Edit Movie')
 
 @section('content')
-    <div class="container py-4">
-        <h2 class="mb-3">Edit Movie</h2>
+<div class="container py-4">
+    <h2 class="mb-3">Edit Movie</h2>
 
-        @if($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-        <form method="POST" action="{{ route('movies.update', $movie->slug) }}">
-            @csrf
-            @method('PUT')
+    <form method="POST" action="{{ route('movies.update', $movie->slug) }}" novalidate>
+        @csrf
+        @method('PUT')
 
-            <div class="mb-3">
-                <label class="form-label">Category</label>
-                <select name="category_id" class="form-select" required>
-                    <option value="">Select a category</option>
-                    @foreach($categories as $category)
-                        <option value="{{ $category->id }}" @selected(old('category_id', $movie->category_id) == $category->id)>
-                            {{ $category->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+        <div class="mb-3">
+            <label class="form-label">Category</label>
+            <select name="category_id" class="form-select @error('category_id') is-invalid @enderror">
+                <option value="">-- Select --</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" @selected(old('category_id', $movie->category_id) == $category->id)>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('category_id')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
 
-            <div class="mb-3">
-                <label class="form-label">Title</label>
-                <input type="text" name="title" class="form-control" value="{{ old('title', $movie->title) }}" required>
-            </div>
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input
+                type="text"
+                name="title"
+                class="form-control @error('title') is-invalid @enderror"
+                value="{{ old('title', $movie->title) }}"
+            >
+            @error('title')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
 
-            <div class="mb-3">
-                <label class="form-label">Date Watched (optional)</label>
-                <input type="date" name="date_watched" class="form-control"
-                    value="{{ old('date_watched', $movie->date_watched) }}">
-            </div>
+        <div class="mb-3">
+            <label class="form-label">IMDb ID (optional)</label>
+            <input
+                type="text"
+                name="imdb_id"
+                class="form-control @error('imdb_id') is-invalid @enderror"
+                value="{{ old('imdb_id', $movie->imdb_id) }}"
+            >
+            @error('imdb_id')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
 
-            <div class="mb-3">
-                <label class="form-label">IMDb ID (optional)</label>
-                <input type="text" name="imdb_id" class="form-control" value="{{ old('imdb_id', $movie->imdb_id) }}">
-            </div>
+        <div class="mb-3">
+            <label class="form-label">Date Watched (dd/mm/yyyy)</label>
+            <input
+                type="text"
+                name="date_watched"
+                class="form-control @error('date_watched') is-invalid @enderror"
+                value="{{ old('date_watched', optional($movie->date_watched)->format('d/m/Y')) }}"
+                placeholder="dd/mm/yyyy"
+            >
+            @error('date_watched')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
 
-            <div class="mb-3">
-                <label class="form-label">Poster URL (optional)</label>
-                <input type="url" name="poster" class="form-control" value="{{ old('poster', $movie->poster) }}">
-            </div>
+        <div class="mb-3">
+            <label class="form-label">Poster URL (optional)</label>
+            <input
+                type="text"
+                name="poster"
+                class="form-control @error('poster') is-invalid @enderror"
+                value="{{ old('poster', $movie->poster) }}"
+            >
+            @error('poster')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
 
-            <div class="mb-3">
-                <label class="form-label">Description (optional)</label>
-                <textarea name="description" class="form-control"
-                    rows="4">{{ old('description', $movie->description) }}</textarea>
-            </div>
+        <div class="mb-3">
+            <label class="form-label">Description (optional)</label>
+            <textarea
+                name="description"
+                class="form-control @error('description') is-invalid @enderror"
+                rows="4"
+            >{{ old('description', $movie->description) }}</textarea>
+            @error('description')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
 
-            <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <a href="{{ route('movies.show', $movie->slug) }}" class="btn btn-outline-secondary">Cancel</a>
-            </div>
-        </form>
-    </div>
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a href="{{ route('movies.show', $movie->slug) }}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
 @endsection

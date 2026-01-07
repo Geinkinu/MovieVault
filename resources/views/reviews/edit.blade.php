@@ -16,26 +16,52 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('reviews.update', [$movie->slug, $review->id]) }}">
+    <form method="POST" action="{{ route('reviews.update', [$movie->slug, $review->id]) }}" novalidate>
         @csrf
         @method('PUT')
 
-        <div class="mb-3">
-            <label class="form-label">Author (optional)</label>
-            <input type="text" name="author" class="form-control" value="{{ old('author', $review->author) }}">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">Author (optional)</label>
+                <input
+                    type="text"
+                    name="author"
+                    class="form-control @error('author') is-invalid @enderror"
+                    value="{{ old('author', $review->author) }}"
+                >
+                @error('author')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Rating (1–5, optional)</label>
+                <input
+                    type="text"
+                    name="rating"
+                    class="form-control @error('rating') is-invalid @enderror"
+                    value="{{ old('rating', $review->rating) }}"
+                    placeholder="1 to 5"
+                >
+                @error('rating')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="col-12">
+                <label class="form-label">Review</label>
+                <textarea
+                    name="content"
+                    class="form-control @error('content') is-invalid @enderror"
+                    rows="4"
+                >{{ old('content', $review->content) }}</textarea>
+                @error('content')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Rating (1–5, optional)</label>
-            <input type="number" name="rating" class="form-control" min="1" max="5" value="{{ old('rating', $review->rating) }}">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Review</label>
-            <textarea name="content" class="form-control" rows="4" required>{{ old('content', $review->content) }}</textarea>
-        </div>
-
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 mt-3">
             <button type="submit" class="btn btn-primary">Update</button>
             <a href="{{ route('movies.show', $movie->slug) }}" class="btn btn-outline-secondary">Cancel</a>
         </div>
